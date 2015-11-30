@@ -15,7 +15,7 @@ ready(function(){
   ctx = canvas.getContext('2d');
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
-  createPlayer();
+  player = new Block(20, 20, 6, true);
 
   var playButton = document.querySelector('#play');
   playButton.addEventListener("click", function(){
@@ -29,7 +29,10 @@ ready(function(){
       play = true;
       this.classList.remove('icon-play');
       this.classList.add('icon-pause');
-      createBlock();
+      if(!cubes.length)
+        createBlock();
+      else
+        timerCubes = window.setTimeout(createBlock, randomRange(500, 2000));
     }
     return false;
   });
@@ -83,10 +86,6 @@ function update(){
 }
 requestAnimationFrame(update);
 
-
-function createPlayer(){
-  player = new Block(20, 20, 6, true);
-}
 function createBlock(){
   var block = new Block(null ,null, 8, false);
   cubes.push(block);
